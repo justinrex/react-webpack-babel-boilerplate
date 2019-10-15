@@ -1,0 +1,10 @@
+#root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: salmon;
+}
+
+.image {
+  background: url('cat.jpg');
+  height: 500px;
+  width: 500px;
+}
