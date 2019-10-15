@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist')
@@ -42,6 +42,10 @@ module.exports = {
         }
       },
       {
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
+      },
+      {
         test:/\.css$/,
         use: [
           { loader: 'style-loader' },
@@ -55,5 +59,8 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
   }
 }
