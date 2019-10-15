@@ -21,13 +21,16 @@ module.exports = {
     minimizer: [new UglifyJsPlugin()]
   },
   plugins: [
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      template: './src/index.html', 
+    filename: './index.html'
+    })
   ],
   module: {
     rules: [
       {
         test:/\.js$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
