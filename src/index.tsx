@@ -1,13 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { App } from './App';
 import './style.css'
-
-const App = () => (
-  <div>
-    Hello Hello
-    <div className="image" />
-  </div>
-)
 
 render(
     <App />,

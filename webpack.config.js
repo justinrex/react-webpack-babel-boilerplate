@@ -13,6 +13,7 @@ module.exports = {
       chunks: 'all'
     }
   },
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     port: 9000
@@ -43,7 +44,8 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader'
+        loader: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
         test:/\.css$/,
@@ -61,6 +63,10 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
+    modules: [
+      path.resolve('src'),
+      path.resolve('node_modules')
+    ]
   }
 }

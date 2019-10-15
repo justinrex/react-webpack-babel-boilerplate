@@ -1,0 +1,10 @@
+{
+  "snapshotSerializers": ["enzyme-to-json/serializer"],
+  "setupFilesAfterEnv": ["<rootDir>src/setupTests.ts"],
+  "roots": [
+    "<rootDir>/src"
+  ],
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  }
+}
