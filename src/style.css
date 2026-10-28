@@ -1,10 +1,19 @@
-#root {
-  font-family: Arial, Helvetica, sans-serif;
-  color: salmon;
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #243047;
+  background: #f5f6f8;
+}
+
+main {
+  max-width: 48rem;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
 }
 
 .image {
-  background: url('bm.jpg');
-  height: 400px;
-  width: 400px;
+  background: url('./bm.jpg') center / cover;
+  aspect-ratio: 1;
+  width: min(100%, 25rem);
+  border-radius: 1rem;
 }

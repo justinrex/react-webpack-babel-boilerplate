@@ -1,72 +1,44 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const path = require('node:path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+module.exports = (_env, argv) => ({
   entry: './src/index.tsx',
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
-  optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
-  },
-  devtool: 'inline-source-map',
+  devtool: argv.mode === 'production' ? 'source-map' : 'eval-source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    port: 9000
+    static: path.resolve(__dirname, 'dist'),
+    host: '127.0.0.1',
+    port: 9000,
+    hot: true,
   },
   optimization: {
-    minimizer: [new UglifyJsPlugin()]
+    splitChunks: { chunks: 'all' },
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html', 
-    filename: './index.html'
-    })
-  ],
+  plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })],
   module: {
     rules: [
       {
-        test:/\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [ 
-              '@babel/preset-env', 
-              '@babel/preset-react'
-            ]
-          }
-        }
+            presets: ['@babel/preset-env', ['@babel/preset-react', { runtime: 'automatic' }]],
+          },
+        },
       },
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
         exclude: /node_modules/,
+        use: 'ts-loader',
       },
-      {
-        test:/\.css$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' }
-        ]
-      },
-      {
-        test:/\.(png|jpg)$/,
-        use: [
-          { loader: 'url-loader' },
-        ]
-      }
-    ]
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      { test: /\.(png|jpe?g|gif|svg)$/i, type: 'asset/resource' },
+    ],
   },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
-    modules: [
-      path.resolve('src'),
-      path.resolve('node_modules')
-    ]
-  }
-}
+  resolve: { extensions: ['.tsx', '.ts', '.jsx', '.js'] },
+});
